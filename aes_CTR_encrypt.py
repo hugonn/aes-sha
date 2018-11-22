@@ -7,14 +7,14 @@ from binascii import hexlify
 from Crypto import Random
 
 def int_of_string(s):
-    return int(binascii.hexlify(s), 16) # IV aleatorio por conta do CTR
+    return int(binascii.hexlify(s), 16) # Contador aleatorio por conta do CTR
 
 def encrypt_CTR(key, texto):
     texto = unhexlify(texto) #Transforma em bytes a informação que está hexa
     key = unhexlify(key)     #Transforma em bytes a informação que está hexa
-    iv = Random.new().read(16)     #
-    ctr = Counter.new(128, initial_value=int_of_string(iv))
-    aes = AES.new(key, AES.MODE_CTR, counter=ctr)
+    iv = Random.new().read(16)     #Cria o "bloco falso"
+    ctr = Counter.new(128, initial_value=int_of_string(iv)) #cria objeto que encripta no modo CTR
+    aes = AES.new(key, AES.MODE_CTR, counter=ctr) #encripta cifra
     return hexlify(iv + aes.encrypt(texto))
 
 

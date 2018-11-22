@@ -6,15 +6,15 @@ from binascii import unhexlify
 from binascii import hexlify
 
 def int_of_string(s):
-    return int(binascii.hexlify(s), 16)
+    return int(binascii.hexlify(s), 16) #contador aleatorio por conta do CTR
 
 
 def decrypt_CTR(key, cifra):
-    cifra = unhexlify(cifra)
-    key = unhexlify(key)
-    iv = cifra[:16]
-    ctr = Counter.new(128, initial_value=int_of_string(iv))
-    aes = AES.new(key, AES.MODE_CTR, counter=ctr)
+    cifra = unhexlify(cifra)    #Transforma em bytes a informação que está hexa
+    key = unhexlify(key)        #Transforma em bytes a informação que está hexa
+    iv = cifra[:16]             #Cria o "bloco falso"    
+    ctr = Counter.new(128, initial_value=int_of_string(iv)) #Cria objeto AES em modo CTR
+    aes = AES.new(key, AES.MODE_CTR, counter=ctr) # Decripta cifra
     return bytes.decode(aes.decrypt(cifra[16:]))
 
 
