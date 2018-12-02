@@ -8,12 +8,12 @@ from binascii import hexlify
 from base64 import b16encode
 from Crypto.Hash import SHA256
 
-#Arquivo que contem o decriptador AES_hex    
+#Arquivo que contem o decriptador AES_hex  
 def decriptar_hex(cifra,chave):
     cifra = unhexlify(cifra)    #Transforma em bytes a informação que está hexa
     chave = unhexlify(chave)    #Transforma em bytes a informação que está hexa
     IV = cifra[:16]             #Recupera o IV dos 16 primeiros bytes
-    aes_obj = AES.new(chave, AES.MODE_CBC, IV) #Utiliza função do PyCrypto
+    aes_obj = AES.new(chave, AES.MODE_CBC, IV) #Utiliza função do PyCrypto :)
     texto = aes_obj.decrypt(cifra[16:]) #Decripta a mensagem sem o IV
     padding = texto[-1]                 #Retira o pad
     return bytes.decode(texto[:-padding]) #Decodifica os Bytes
