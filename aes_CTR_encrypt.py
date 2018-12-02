@@ -15,7 +15,7 @@ def encrypt_CTR(key, texto):
     iv = Random.new().read(16)     #Cria o "bloco falso"
     ctr = Counter.new(128, initial_value=int_of_string(iv)) #cria objeto que encripta no modo CTR
     aes = AES.new(key, AES.MODE_CTR, counter=ctr) #encripta cifra
-    return hexlify(iv + aes.encrypt(texto))
+    return bytes.decode(hexlify(iv + aes.encrypt(texto)))  # Retorna cifra encriptada
 
 
 msg_clara = "CTR mode lets you build a stream cipher from a block cipher"
@@ -25,5 +25,5 @@ key = "36f18357be4dbd77f050515c73fcf9f2"
 msg_encriptada= encrypt_CTR(key,hexlify(str.encode(msg_clara)))
 msg_encriptada2 = encrypt_CTR(key,msg_clara2)
 
-print("Mensagem Clara ----->",msg_clara,"\nMensagem Encriptada ------>",msg_encriptada)
-print("\nMensagem Clara ----->",bytes.decode(unhexlify(msg_clara2)),"\nMensagem Encriptada ------>",msg_encriptada)
+print("Mensagem Clara ----->",msg_clara,"\nMensagem Encriptada ------>",(msg_encriptada))
+print("\nMensagem Clara ----->",bytes.decode(unhexlify(msg_clara2)),"\nMensagem Encriptada ------>",(msg_encriptada2))
